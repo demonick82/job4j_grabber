@@ -15,11 +15,8 @@ public class AlertRabbit {
     public static void main(String[] args) {
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-            InputStream in = AlertRabbit.class.getClassLoader().
-                    getResourceAsStream("rabbit.properties");
-            Properties config = new Properties();
             scheduler.start();
-            config.load(in);
+            Properties config = getProperties("rabbit.properties");
             int interval = Integer.parseInt((String) config.get("rabbit.interval"));
             JobDetail job = newJob(Rabbit.class).build();
             SimpleScheduleBuilder times = simpleSchedule()
@@ -30,10 +27,22 @@ public class AlertRabbit {
                     .withSchedule(times)
                     .build();
             scheduler.scheduleJob(job, trigger);
-        } catch (IOException | SchedulerException e) {
+        } catch (SchedulerException e) {
             e.printStackTrace();
         }
     }
+
+    public static Properties getProperties(String path) {
+        Properties config = new Properties();
+        try (InputStream in = AlertRabbit.class.getClassLoader().
+                getResourceAsStream(path)) {
+            config.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return config;
+    }
+
     public static class Rabbit implements Job {
         @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
