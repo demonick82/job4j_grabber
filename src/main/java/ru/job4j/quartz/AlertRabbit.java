@@ -13,7 +13,6 @@ import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
     public static void main(String[] args) {
-
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             InputStream in = AlertRabbit.class.getClassLoader().
@@ -35,9 +34,7 @@ public class AlertRabbit {
             e.printStackTrace();
         }
     }
-
     public static class Rabbit implements Job {
-
         @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
             System.out.println("Rabbit runs here ...");
