@@ -9,15 +9,20 @@ import java.io.IOException;
 
 public class SqlRuParse {
     public static void main(String[] args) throws IOException {
-        Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
-        Elements row = doc.select(".postslisttopic");
+        new SqlRuParse().parse(5);
+    }
 
-        for (Element td : row) {
-            Element href = td.child(0);
-            Element date = td.parent().child(5);
-            System.out.println(href.attr("href"));
-            System.out.println(href.text());
-            System.out.println(date.text());
+    public void parse(int pages) throws IOException {
+        for (int i = 1; i <= pages; i++) {
+            Document doc = Jsoup.connect(String.format("https://www.sql.ru/forum/job-offers/%d", i)).get();
+            Elements row = doc.select(".postslisttopic");
+            for (Element td : row) {
+                Element href = td.child(0);
+                Element date = td.parent().child(5);
+                System.out.println(href.attr("href"));
+                System.out.println(href.text());
+                System.out.println(date.text());
+            }
         }
     }
 }
