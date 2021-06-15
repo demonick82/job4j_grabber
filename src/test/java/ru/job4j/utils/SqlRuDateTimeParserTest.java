@@ -17,8 +17,8 @@ public class SqlRuDateTimeParserTest {
         String date = "сегодня, 22:14";
         LocalDate now = LocalDate.now();
         LocalTime localtime = LocalTime.of(22, 14);
-        LocalDateTime inspect = LocalDateTime.of(now,localtime);
-        assertThat(sqlRuDateTimeParser.parse(date),is(inspect));
+        LocalDateTime inspect = LocalDateTime.of(now, localtime);
+        assertThat(sqlRuDateTimeParser.parse(date), is(inspect));
     }
 
     @Test
@@ -27,17 +27,17 @@ public class SqlRuDateTimeParserTest {
         String date = "вчера, 22:14";
         LocalDate now = LocalDate.now().minusDays(1);
         LocalTime localtime = LocalTime.of(22, 14);
-        LocalDateTime inspect = LocalDateTime.of(now,localtime);
-        assertThat(sqlRuDateTimeParser.parse(date),is(inspect));
+        LocalDateTime inspect = LocalDateTime.of(now, localtime);
+        assertThat(sqlRuDateTimeParser.parse(date), is(inspect));
     }
 
     @Test
     public void dateTimeParseDate() {
         SqlRuDateTimeParser sqlRuDateTimeParser = new SqlRuDateTimeParser();
         String date = "21 май 21, 08:06";
-        LocalDate now = LocalDate.of(2021,5,21);
+        LocalDate now = LocalDate.of(2021, 5, 21);
         LocalTime localtime = LocalTime.of(8, 6);
-        LocalDateTime inspect = LocalDateTime.of(now,localtime);
-        assertThat(sqlRuDateTimeParser.parse(date),is(inspect));
+        LocalDateTime inspect = LocalDateTime.of(now, localtime);
+        assertThat(sqlRuDateTimeParser.parse(date), is(inspect));
     }
 }
