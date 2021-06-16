@@ -26,8 +26,9 @@ public class SqlRuParse implements Parse {
                 Element href = td.child(0);
                 String linkSubPost = href.attr("href");
                 namePost = href.text();
-                if (javaSearch.matcher(namePost).find())
+                if (javaSearch.matcher(namePost).find()) {
                     postList.add(detail(linkSubPost));
+                }
             }
         }
         return postList;
