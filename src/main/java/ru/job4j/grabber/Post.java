@@ -60,7 +60,6 @@ public class Post {
     @Override
     public String toString() {
         return "Post{"
-                + "id=" + id
                 + ", postName='" + postName + '\''
                 + ", postText='" + postText + '\''
                 + ", postLink='" + postLink + '\''

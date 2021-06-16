@@ -4,40 +4,52 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import ru.job4j.grabber.Post;
+import ru.job4j.utils.SqlRuDateTimeParser;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
-public class SqlRuParse {
-    public static void main(String[] args) throws IOException {
-        new SqlRuParse().parseList(5);
-    }
+public class SqlRuParse implements Parse {
+    private String namePost;
+    private Pattern javaSearch = Pattern.compile("Java\\W");
 
-    public void parseList(int pages) throws IOException {
-        for (int i = 1; i <= pages; i++) {
-            Document doc = Jsoup.connect(String.format("https://www.sql.ru/forum/job-offers/%d", i)).get();
+    @Override
+    public List<Post> list(String link) throws IOException {
+        List<Post> postList = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            Document doc = Jsoup.connect(String.format("%s/%d", link, i)).get();
             Elements row = doc.select(".postslisttopic");
             for (Element td : row) {
                 Element href = td.child(0);
-                Element date = td.parent().child(5);
-                String link = href.attr("href");
-                String name = href.text();
-                String dateText = date.text();
-                System.out.println(link);
-                System.out.println(name);
-                System.out.println(dateText);
-                parseLink(link);
-                System.out.println();
+                String linkSubPost = href.attr("href");
+                namePost = href.text();
+                if (javaSearch.matcher(namePost).find())
+                    postList.add(detail(linkSubPost));
             }
         }
+        return postList;
     }
 
-    public void parseLink(String link) throws IOException {
+    @Override
+    public Post detail(String link) throws IOException {
         Document doc = Jsoup.connect(link).get();
         Elements row = doc.select(".msgBody");
         Elements footer = doc.select(".msgFooter");
-        String postDetail = row.get(1).text();
+        String postText = row.get(1).text();
         String postDate = footer.first().ownText().replace(" [] |", "");
-        System.out.println(postDetail);
-        System.out.println(postDate);
+        return new Post(namePost, postText, link, new SqlRuDateTimeParser().parse(postDate));
+    }
+
+    public static void main(String[] args) {
+        try {
+            for (Post post : new SqlRuParse().list("https://www.sql.ru/forum/job-offers")) {
+                System.out.println(post);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
