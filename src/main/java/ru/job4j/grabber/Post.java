@@ -5,11 +5,6 @@ import java.util.Objects;
 
 public class Post {
     private int id;
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     private String postName;
     private String postText;
     private String postLink;
@@ -20,6 +15,10 @@ public class Post {
         this.postText = postText;
         this.postLink = postLink;
         this.postCreated = postCreated;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPostName() {
