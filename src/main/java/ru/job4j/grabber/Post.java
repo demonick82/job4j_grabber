@@ -4,6 +4,12 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String postName;
     private String postText;
     private String postLink;
@@ -34,22 +40,18 @@ public class Post {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return Objects.equals(postName, post.postName)
-                && Objects.equals(postText, post.postText)
-                && Objects.equals(postLink, post.postLink)
-                && Objects.equals(postCreated, post.postCreated);
+        return id == post.id &&
+                Objects.equals(postName, post.postName) &&
+                Objects.equals(postLink, post.postLink) &&
+                Objects.equals(postCreated, post.postCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(postName, postText, postLink, postCreated);
+        return Objects.hash(id, postName, postLink, postCreated);
     }
 
     @Override
