@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class SqlRuParse implements Parse {
     private String namePost;
-    private Pattern javaSearch = Pattern.compile("Java\\W");
+    private Pattern javaSearch = Pattern.compile("java\\W", Pattern.CASE_INSENSITIVE);
 
     @Override
     public List<Post> list(String link) throws IOException {
