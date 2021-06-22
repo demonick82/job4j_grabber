@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SqlRuParse implements Parse {
-    private String namePost;
+    private String postName;
     private Pattern javaSearch = Pattern.compile("java\\W", Pattern.CASE_INSENSITIVE);
 
     @Override
@@ -25,8 +25,8 @@ public class SqlRuParse implements Parse {
             for (Element td : row) {
                 Element href = td.child(0);
                 String linkSubPost = href.attr("href");
-                namePost = href.text();
-                if (javaSearch.matcher(namePost).find()) {
+                postName = href.text();
+                if (javaSearch.matcher(postName).find()) {
                     postList.add(detail(linkSubPost));
                 }
             }
@@ -41,14 +41,12 @@ public class SqlRuParse implements Parse {
         Elements footer = doc.select(".msgFooter");
         String postText = row.get(1).text();
         String postDate = footer.first().ownText().replace(" [] |", "");
-        return new Post(namePost, postText, link, new SqlRuDateTimeParser().parse(postDate));
+        return new Post(postName, postText, link, new SqlRuDateTimeParser().parse(postDate));
     }
 
     public static void main(String[] args) {
         try {
-            for (Post post : new SqlRuParse().list("https://www.sql.ru/forum/job-offers")) {
-                System.out.println(post);
-            }
+            new SqlRuParse().list("https://www.sql.ru/forum/job-offers").forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }

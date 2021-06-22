@@ -33,13 +33,14 @@ public class SqlRuDateTimeParser implements DateTimeParser {
         return localDateTime;
     }
 
+
     private Map<String, Integer> createMap() {
         Map<String, Integer> map = new HashMap<>();
         map.put("янв", 1);
         map.put("фев", 2);
         map.put("мар", 3);
         map.put("апр", 4);
-        map.put("май", 5);
+        map.put("май", 4);
         map.put("июн", 6);
         map.put("июл", 7);
         map.put("авг", 8);

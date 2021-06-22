@@ -3,5 +3,5 @@ create table posts(
     name text,
     text text,
     link text unique,
-    created timestamp
+    created timestamp without time zone
 );

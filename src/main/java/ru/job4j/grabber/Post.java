@@ -1,5 +1,6 @@
 package ru.job4j.grabber;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -59,11 +60,12 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{"
-                + ", postName='" + postName + '\''
-                + ", postText='" + postText + '\''
-                + ", postLink='" + postLink + '\''
-                + ", postCreated=" + postCreated
-                + '}';
+        return "Post{" +
+                "id=" + id +
+                ", postName='" + postName + '\'' +
+                ", postText='" + postText + '\'' +
+                ", postLink='" + postLink + '\'' +
+                ", postCreated=" + postCreated +
+                '}';
     }
 }
