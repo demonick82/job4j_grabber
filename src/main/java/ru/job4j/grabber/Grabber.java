@@ -5,6 +5,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import ru.job4j.html.Parse;
 import ru.job4j.html.SqlRuParse;
 import ru.job4j.utils.SqlProperties;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
@@ -29,8 +30,8 @@ public class Grabber implements Grab {
         return scheduler;
     }
 
-    public void cfg()  {
-        cfg= SqlProperties.getProperties("grabber.properties");
+    public void cfg() {
+        cfg = SqlProperties.getProperties("grabber.properties");
     }
 
 
@@ -62,12 +63,14 @@ public class Grabber implements Grab {
             Parse parse = (Parse) map.get("parse");
             try {
                 for (Post post : parse.list("https://www.sql.ru/forum/job-offers")) {
-                    store.save(post);}
+                    store.save(post);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
     public void web(Store store) {
         new Thread(() -> {
             try (ServerSocket server = new ServerSocket(Integer.parseInt(cfg.getProperty("port")))) {
@@ -77,8 +80,8 @@ public class Grabber implements Grab {
                         out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                         for (Post post : store.getAll()) {
 
-                            out.write
-                                    (post.toString().getBytes((Charset.forName("Windows-1251"))));
+                            out.write(
+                                    post.toString().getBytes((Charset.forName("Windows-1251"))));
                             out.write(System.lineSeparator().getBytes());
                         }
                     } catch (IOException io) {
