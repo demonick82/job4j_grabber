@@ -59,12 +59,8 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", postName='" + postName + '\'' +
-                ", postText='" + postText + '\'' +
-                ", postLink='" + postLink + '\'' +
-                ", postCreated=" + postCreated +
-                '}';
+        return String.format("%d. %s%s%s%s%s%sДата %s", id,  postName,
+                System.lineSeparator(), postLink, System.lineSeparator(), postText,
+                System.lineSeparator(), postCreated.toString());
     }
 }
