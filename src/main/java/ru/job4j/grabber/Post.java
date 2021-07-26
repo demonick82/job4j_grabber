@@ -37,6 +37,10 @@ public class Post {
         return postCreated;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -59,8 +63,7 @@ public class Post {
 
     @Override
     public String toString() {
-        return String.format("%d. %s%s%s%s%s%sДата %s", id,  postName,
-                System.lineSeparator(), postLink, System.lineSeparator(), postText,
-                System.lineSeparator(), postCreated.toString());
+        return String.format("<p>%d. %s</p><p>%s</p><p>%s</p><p>Дата %s</p>", id, postName,
+                postLink, postText, postCreated.toString());
     }
 }
